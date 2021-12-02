@@ -40,5 +40,27 @@ class Day02 : AbstractDay(2) {
         }
 
         return  horizontalPos*depth
+
+    }
+
+    /*
+     * Alternative solution for part two in functional programming style, specifically using tail recursion.
+     * Accumulator is a triple consisting of (horizontal position, depth, aim)
+     * To get the result call secondPuzzle(input, Triple(0,0,0))
+     */
+    fun secondPuzzle(inputData : List<List<String>>, acc : Triple<Int, Int, Int>) : Number {
+
+        if(inputData.isEmpty())
+            return acc.first * acc.second
+
+        val elem = inputData.first()
+        val value = elem.last().toInt()
+        when (elem.first()) {
+            "forward" -> return secondPuzzle(inputData.drop(1), Triple(acc.first + value,acc.second + acc.third*value,acc.third))
+            "down" -> return secondPuzzle(inputData.drop(1), Triple(acc.first,acc.second,acc.third + value))
+            "up" -> return secondPuzzle(inputData.drop(1), Triple(acc.first,acc.second,acc.third - value))
+            else -> return -1 // should never happen
+        }
+
     }
 }
