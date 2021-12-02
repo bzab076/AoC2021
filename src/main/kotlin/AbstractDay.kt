@@ -18,4 +18,10 @@ abstract class AbstractDay (private val dayNumber: Int) {
 
     }
 
+    fun inputNumbers(): List<Int> {
+
+        return inputLines().map { it -> it.toInt() }
+
+    }
+
 }
