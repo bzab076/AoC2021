@@ -4,8 +4,7 @@ class Day03 : AbstractDay(3) {
 
     override fun partOne(): Number {
 
-        val binSize = inputLines().first().length - 1
-        val gamma = (0..binSize).fold(""){acc, i ->
+        val gamma = inputLines().first().indices.fold(""){acc, i ->
             if(mostCommonBit(inputLines(),i) == '1') acc+"1"
             else acc+"0"
         }
@@ -17,23 +16,22 @@ class Day03 : AbstractDay(3) {
 
     override fun partTwo(): Number {
 
-        val binSize = inputLines().first().length - 1
-        val oxy = (0..binSize).fold(inputLines()) {acc, i ->
+        val oxygenGenerator = inputLines().first().indices.fold(inputLines()) { acc, i ->
             if(acc.size>1) acc.filter { v -> v.get(i) ==  mostCommonBit(acc,i)}
             else acc
         }.first().toInt(2)
 
-        val co2 = (0..binSize).fold(inputLines()) {acc, i ->
+        val co2Scrubber = inputLines().first().indices.fold(inputLines()) { acc, i ->
             if(acc.size>1) acc.filter { v -> v.get(i) !=  mostCommonBit(acc,i)}
             else acc
         }.first().toInt(2)
 
-        return oxy*co2
+        return oxygenGenerator*co2Scrubber
     }
 
-    fun mostCommonBit(list : List<String>, index : Int) : Char {
+    private fun mostCommonBit(list : List<String>, index : Int) : Char {
 
-        val ones = list.map{it -> it.get(index)}.filter { it -> it == '1' }.count()
+        val ones = list.map { it -> it[index] }.count { it -> it == '1' }
         if(ones >= ceil(list.size.toDouble()/2))
             return '1'
         else
