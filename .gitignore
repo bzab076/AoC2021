@@ -1,4 +1,4 @@
 .idea/
 .gradle/
 build/
-/src/main/kotlin/Day03old.kt
+/src/main/kotlin/*old.kt
