@@ -5,12 +5,10 @@ class Day07 : AbstractDay(7) {
     override fun partOne(): Number {
 
         val positions = inputString().split(",").map { it -> it.toInt() }
-        val maxPos = positions.map { it -> it.toInt() }.maxOrNull() as Int
+        val maxPos = positions.maxOf { it -> it }
 
         val possibleFuels = (0..maxPos).map {
-                it -> positions.fold(0) { acc, pos ->
-                   acc + abs(pos-it)
-             }
+                it -> positions.sumOf { pos -> abs(pos - it) }
         }
 
         val res = possibleFuels.minOrNull() as Int
@@ -21,12 +19,10 @@ class Day07 : AbstractDay(7) {
     override fun partTwo(): Number {
 
         val positions = inputString().split(",").map { it -> it.toInt() }
-        val maxPos = positions.map { it -> it.toInt() }.maxOrNull() as Int
+        val maxPos = positions.maxOf { it -> it }
 
         val possibleFuels = (0..maxPos).map {
-                it -> positions.fold(0) { acc, pos ->
-                    acc + (abs(pos-it) * (abs(pos-it) + 1) / 2)
-                }
+                it -> positions.sumOf { pos -> (abs(pos-it) * (abs(pos-it) + 1) / 2) }
         }
 
         val res = possibleFuels.minOrNull() as Int
