@@ -2,13 +2,13 @@ class Day08 : AbstractDay(8) {
 
     override fun partOne(): Number {
 
-        val outputNums = inputLines().map { it -> it.substringAfter("|").trim().split(" ") }
+        val outputNums = inputLines().map { it -> it.substringAfter(" | ").split(" ") }
         return outputNums.map { it -> it.count{ s -> listOf(2,3,4,7).contains(s.length) } }.sum()
     }
 
     override fun partTwo(): Number {
 
-        return inputLines().map { it -> getNumber(it) }.sum()
+        return inputLines().sumOf { getNumber(it) }
     }
 
     /*
@@ -16,35 +16,35 @@ class Day08 : AbstractDay(8) {
      */
     private fun findDigit(pattern : String, dmap : Map<String,Int>) : Char {
 
-        val key = dmap.keys.find { it ->  matchByChar(pattern, it)}
+        val key = dmap.keys.find { matchByChar(pattern, it)}
         return  dmap.get(key).toString().first()
     }
 
     /*
-    * Based on signal patterns creates a map which maps pattern to a digit.
+    * Based on signal patterns, creates a map which maps pattern to a digit.
      */
     private fun getWireMap(input : List<String>) : Map<String,Int> {
 
         val result : MutableMap<String,Int> = emptyMap<String,Int>().toMutableMap()
 
         // pattern of length 2 always maps to 1
-        val one = input.find { it ->it.length==2 } as String
+        val one = input.find { it.length==2 } as String
         result.put(one, 1)
 
         // pattern of length 3 always maps to 7
-        val seven = input.find { it ->it.length==3 } as String
+        val seven = input.find { it.length==3 } as String
         result.put(seven,7)
 
         // pattern of length 4 always maps to 4
-        val four = input.find { it ->it.length==4 } as String
+        val four = input.find { it.length==4 } as String
         result.put(four,4)
 
         // pattern of length 7 always maps to 8
-        val eight = input.find { it ->it.length==7 } as String
+        val eight = input.find { it.length==7 } as String
         result.put(eight,8)
 
         // determine patterns of length 5
-        val fives = input.filter { it -> it.length==5 }
+        val fives = input.filter { it.length==5 }
         fives.forEach {
             if(it.contains(one[0]) && it.contains(one[1])) {
                 result.put(it,3)
@@ -57,7 +57,7 @@ class Day08 : AbstractDay(8) {
         }
 
         // determine patterns of length 6
-        val sixes = input.filter { it -> it.length==6 }
+        val sixes = input.filter { it.length==6 }
         sixes.forEach {
             if(!it.contains(one[0]) || !it.contains(one[1])) {
                 result.put(it,6)
@@ -77,10 +77,10 @@ class Day08 : AbstractDay(8) {
      */
     private fun getNumber(line : String) : Int {
 
-        val signal = line.substringBefore("|").trim().split(" ")
-        val output = line.substringAfter("|").trim().split(" ")
+        val signal = line.substringBefore(" | ").split(" ")
+        val output = line.substringAfter(" | ").split(" ")
         val wireMap = getWireMap(signal)
-        val res = output.map{it -> findDigit(it,wireMap)}.joinToString("")
+        val res = output.map{ findDigit(it,wireMap)}.joinToString("")
 
         return res.toInt()
     }
