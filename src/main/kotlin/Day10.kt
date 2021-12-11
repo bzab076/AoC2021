@@ -18,7 +18,7 @@ class Day10 : AbstractDay(10) {
 
         line.forEach {
 
-            if(listOf<Char>('[','{','(','<').contains(it)) {
+            if(listOf('[','{','(','<').contains(it)) {
                 openBrackets.add(it)
             }
             else {
@@ -44,7 +44,7 @@ class Day10 : AbstractDay(10) {
         val openBrackets : MutableList<Char> = emptyList<Char>().toMutableList()
 
         line.forEach {
-            if(listOf<Char>('[','{','(','<').contains(it)) {
+            if(listOf('[','{','(','<').contains(it)) {
                 openBrackets.add(it)
             }
             else {
