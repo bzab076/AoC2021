@@ -1,8 +1,10 @@
 class Day09 : AbstractDay(9) {
 
+    private val grid = inputDigits()
+
     override fun partOne(): Number {
 
-        val grid = getGrid()
+
         var result = 0
 
         for(r in grid.indices) {
@@ -22,7 +24,6 @@ class Day09 : AbstractDay(9) {
 
     override fun partTwo(): Number {
 
-        val grid = getGrid()
         val basins : MutableList<Int> = emptyList<Int>().toMutableList()
 
         for(r in grid.indices) {
@@ -41,22 +42,6 @@ class Day09 : AbstractDay(9) {
         return basins.sortedDescending().take(3).fold(1){acc, it -> acc*it}
     }
 
-    private fun getGrid(): Array<IntArray> {
-
-        val rows = inputLines().size
-        val cols = inputLines().first().length
-        val grid = Array(rows) { IntArray(cols) }
-
-        var r = 0
-        inputLines().forEach {
-            for(c in it.indices) {
-                grid[r][c] = it.get(c).toString().toInt()
-            }
-            r++
-        }
-
-        return grid
-    }
 
     private fun getBasinSize(row : Int, col : Int, grid : Array<IntArray>, acc : MutableSet<Pair<Int,Int>>) : Int {
 

@@ -5,7 +5,7 @@ class Day11 : AbstractDay(11) {
 
     private fun simulateOctopusFlashing(partOneSteps : Int, debug : Boolean) {
 
-        val grid = getGrid()
+        val grid = inputDigits()
         var allFlashes = 0
         var step = 1
         var flashesInStep = 0
@@ -63,7 +63,7 @@ class Day11 : AbstractDay(11) {
             }
 
             if(flashesInStep == 100) {
-                // all octopuses are synschronized
+                // all octopuses are synchronized
                 synchronizedStep = step
             }
 
@@ -83,20 +83,4 @@ class Day11 : AbstractDay(11) {
         return synchronizedStep
     }
 
-    private fun getGrid(): Array<IntArray> {
-
-        val rows = inputLines().size
-        val cols = inputLines().first().length
-        val grid = Array(rows) { IntArray(cols) }
-
-        var r = 0
-        inputLines().forEach {
-            for(c in it.indices) {
-                grid[r][c] = it.get(c).toString().toInt()
-            }
-            r++
-        }
-
-        return grid
-    }
 }

@@ -2,9 +2,9 @@ class Day05 : AbstractDay(5) {
 
     val ventCoordinates : MutableList<Pair<Pair<Int,Int>,Pair<Int,Int>>> = emptyList<Pair<Pair<Int,Int>,Pair<Int,Int>>>().toMutableList()
 
-    val rows = 1000
-    val cols = 1000
-    var grid = Array(rows) { IntArray(cols) }
+    private val rows = 1000
+    private val cols = 1000
+    private var grid = Array(rows) { IntArray(cols) }
 
     override fun partOne(): Number {
 
@@ -53,8 +53,8 @@ class Day05 : AbstractDay(5) {
 
             if (isLineValid) {
 
-                var xIncrement : Int
-                var yIncrement : Int
+                val xIncrement : Int
+                val yIncrement : Int
 
                 if(it.first.first == it.second.first) {
                     xIncrement = 0

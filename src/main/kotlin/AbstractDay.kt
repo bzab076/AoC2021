@@ -18,10 +18,9 @@ abstract class AbstractDay (private val dayNumber: Int) {
 
     }
 
-    fun inputNumbers(): List<Int> {
+    fun inputNumbers() = inputLines().map { it -> it.toInt() }
 
-        return inputLines().map { it -> it.toInt() }
+    fun inputDigits() =  inputLines().map { it.map { char -> char.digitToInt() }.toIntArray() }.toTypedArray()
 
-    }
 
 }
