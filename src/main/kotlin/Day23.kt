@@ -1,5 +1,7 @@
 class Day23 : AbstractDay(23) {
 
+    private var roomSize = 2
+
     private val hallNodes : List<Node> = listOf(
         Node("H0", 0, false, true),
         Node("H1", 1, false, true),
@@ -42,26 +44,18 @@ class Day23 : AbstractDay(23) {
         Node("D4", 4, true, true)
     )
 
-    private val amphipods : List<Amphipod> = listOf(
-        Amphipod("A1",'A'),
-        Amphipod("A2",'A'),
-        Amphipod("A3",'A'),
-        Amphipod("A4",'A'),
-        Amphipod("B1",'B'),
-        Amphipod("B2",'B'),
-        Amphipod("B3",'B'),
-        Amphipod("B4",'B'),
-        Amphipod("C1",'C'),
-        Amphipod("C2",'C'),
-        Amphipod("C3",'C'),
-        Amphipod("C4",'C'),
-        Amphipod("D1",'D'),
-        Amphipod("D2",'D'),
-        Amphipod("D3",'D'),
-        Amphipod("D4",'D')
+    private val initialState1 : Map<Node, Amphipod> = mapOf(
+        Node("A1", 1, true, true) to Amphipod("B1",'B'),
+        Node("A2", 2, true, true) to Amphipod("C1",'C'),
+        Node("B1", 1, true, true) to Amphipod("B2",'B'),
+        Node("B2", 2, true, true) to Amphipod("A1",'A'),
+        Node("C1", 1, true, true) to Amphipod("D1",'D'),
+        Node("C2", 2, true, true) to Amphipod("A2",'A'),
+        Node("D1", 1, true, true) to Amphipod("D2",'D'),
+        Node("D2", 2, true, true) to Amphipod("C2",'C')
     )
 
-    private val initialState : Map<Node, Amphipod> = mapOf(
+    private val initialState2 : Map<Node, Amphipod> = mapOf(
         Node("A1", 1, true, true) to Amphipod("B1",'B'),
         Node("A2", 2, true, true) to Amphipod("D1",'D'),
         Node("A3", 3, true, true) to Amphipod("D2",'D'),
@@ -81,12 +75,13 @@ class Day23 : AbstractDay(23) {
     )
 
     override fun partOne(): Number {
-        // solved by hand
-        return 10607
+        roomSize = 2
+        return findCheapestSolution(initialState1, 0)
     }
 
     override fun partTwo(): Number {
-        return findCheapestSolution(initialState, 0)
+        roomSize = 4
+        return findCheapestSolution(initialState2, 0)
     }
 
     private fun findCheapestSolution(state: Map<Node, Amphipod>, accumulatedCost : Int) : Int {
@@ -99,15 +94,16 @@ class Day23 : AbstractDay(23) {
         // this is dead end
         if(allPaths.isEmpty()) return 0
 
-        val costs =  allPaths.map { path ->
-           val amp : Amphipod = state.get(path.first())!!
+        val mincost =  allPaths.map { path ->
+            val amp : Amphipod = state.get(path.first())!!
             findCheapestSolution(
                 moveAmphipod(path.first(),path.last(),amp,state),
-            accumulatedCost + (path.size - 1)*getEnergyConsumption(amp.type)
+                accumulatedCost + (path.size - 1)*getEnergyConsumption(amp.type)
             )
         }
+            .filter{ it > 0 }.minOrNull()
 
-        return if(costs.filter { it > 0 }.minOrNull() != null) costs.filter { it > 0 }.minOrNull()!! else 0
+        return mincost ?: 0
     }
 
     private fun moveAmphipod (start: Node, destination: Node, amp : Amphipod, state: Map<Node, Amphipod>) :  Map<Node, Amphipod> {
@@ -124,7 +120,7 @@ class Day23 : AbstractDay(23) {
     }
 
     private fun isEndState (state : Map<Node, Amphipod>) : Boolean  =
-                state.size == 16 &&
+                state.size == 4*roomSize &&
                 state.keys.all { it.isRoom } &&
                 state.all { (k,v) -> k.name.startsWith(v.type) }
 
@@ -221,10 +217,10 @@ class Day23 : AbstractDay(23) {
 
     private fun getRoomNodes( roomID: Char) : List<Node>  =
          when (roomID) {
-            'A' -> aRoomNodes
-            'B' -> bRoomNodes
-            'C' -> cRoomNodes
-            'D' -> dRoomNodes
+            'A' -> aRoomNodes.take(roomSize)
+            'B' -> bRoomNodes.take(roomSize)
+            'C' -> cRoomNodes.take(roomSize)
+            'D' -> dRoomNodes.take(roomSize)
             else -> throw Exception("Invalid room node")
         }
 
