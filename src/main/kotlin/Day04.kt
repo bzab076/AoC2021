@@ -22,7 +22,7 @@ class Day04 : AbstractDay(4) {
                     println("Winning board index ${boards.indexOf(board)}")
                     println("Winning number is ${num}")
 
-                    val unmarked = board.filter { it -> !it.second }.map { it -> it.first }.sum()
+                    val unmarked = board.filter { !it.second }.sumOf { it.first }
                     return unmarked*num
                 }
             }
@@ -58,7 +58,7 @@ class Day04 : AbstractDay(4) {
                         println("Last winning board index " + boards.indexOf(board))
                         println("Last winning number is ${num}")
 
-                        val unmarked = board.filter { it -> !it.second }.map { it -> it.first }.sum()
+                        val unmarked = board.filter { !it.second }.sumOf { it.first }
                         return unmarked*num
                     }
 
@@ -73,7 +73,7 @@ class Day04 : AbstractDay(4) {
     private fun parseInput() {
 
         val rawInput = inputLines()
-        numbers = rawInput.first().split(",").map{it -> it.toInt()}
+        numbers = rawInput.first().split(",").map{ it.toInt()}
 
         var currentBoard : MutableList<Pair<Int,Boolean>> = emptyList<Pair<Int,Boolean>>().toMutableList()
 
@@ -85,7 +85,7 @@ class Day04 : AbstractDay(4) {
                 continue
             }
 
-            val boardLine = line.split(" ").filter { it -> !it.isEmpty() }.map { it -> Pair(it.toInt(), false) }
+            val boardLine = line.split(" ").filter { it.isNotEmpty() }.map { Pair(it.toInt(), false) }
             for(elem in boardLine)
                 currentBoard.add(elem)
         }

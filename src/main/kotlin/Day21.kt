@@ -35,7 +35,6 @@ class Day21 : AbstractDay(21) {
         }
 
         return min(p1Score,p2Score) * rollCount
-
     }
 
     override fun partTwo(): Number {
@@ -75,7 +74,6 @@ class Day21 : AbstractDay(21) {
             val newScore = score + newPos
             return if(player1) GameState(newPos, newScore, p2Pos, p2Score, !player1) else GameState(p1Pos, p1Score, newPos, newScore, !player1)
         }
-
     }
 
     private class UniverseCount(val p1Count: Long, val p2Count: Long) {
@@ -89,6 +87,5 @@ class Day21 : AbstractDay(21) {
         fun max(): Long = maxOf(p1Count, p2Count)
 
     }
-
 
 }

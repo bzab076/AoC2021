@@ -31,11 +31,11 @@ class Day03 : AbstractDay(3) {
 
     private fun mostCommonBit(list : List<String>, index : Int) : Char {
 
-        val ones = list.map { it -> it[index] }.count { it -> it == '1' }
-        if(ones >= ceil(list.size.toDouble()/2))
-            return '1'
+        val ones = list.map { it[index] }.count { it == '1' }
+        return if(ones >= ceil(list.size.toDouble()/2))
+            '1'
         else
-            return '0'
+            '0'
     }
 
 }

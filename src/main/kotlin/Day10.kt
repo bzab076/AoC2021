@@ -52,7 +52,7 @@ class Day10 : AbstractDay(10) {
             }
         }
 
-        val closingBrackets = openBrackets.reversed().map{ it ->
+        val closingBrackets = openBrackets.reversed().map{
             when (it) {
                 '(' -> ')'
                 '[' -> ']'
@@ -63,13 +63,12 @@ class Day10 : AbstractDay(10) {
         }
 
         val score = closingBrackets.fold(0L) { acc, it ->
-            val charScore: Int
-            when (it) {
-                ')' -> charScore=1
-                ']' -> charScore=2
-                '}' -> charScore=3
-                '>' -> charScore=4
-                else -> charScore=0
+            val charScore = when (it) {
+                ')' -> 1
+                ']' -> 2
+                '}' -> 3
+                '>' -> 4
+                else -> 0
             }
             acc*5 + charScore
         }

@@ -64,6 +64,6 @@ class Day09 : AbstractDay(9) {
         val left = if (col - 1 >= 0) grid[row][col - 1] else 10
         val right = if (col + 1 < grid[row].size) grid[row][col + 1] else 10
 
-        return arrayListOf<Int>(up,down,left,right)
+        return arrayListOf(up,down,left,right)
     }
 }

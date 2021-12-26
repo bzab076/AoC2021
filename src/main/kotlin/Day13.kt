@@ -67,8 +67,8 @@ class Day13 : AbstractDay(13) {
 
     private fun parseInput() {
 
-        val blankline = inputLines().indexOf("")
-        coordinates = inputLines().take(blankline).map { it.split(",") }.map{Pair(it.first().toInt(), it.last().toInt())}
-        folds = inputLines().takeLast(inputLines().size - blankline - 1).map { it.split("=") }.map{Pair(it.first().last(), it.last().toInt())}
+        val emptyLineIndex = inputLines().indexOf("")
+        coordinates = inputLines().take(emptyLineIndex).map { it.split(",") }.map{Pair(it.first().toInt(), it.last().toInt())}
+        folds = inputLines().takeLast(inputLines().size - emptyLineIndex - 1).map { it.split("=") }.map{Pair(it.first().last(), it.last().toInt())}
     }
 }

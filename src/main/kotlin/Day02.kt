@@ -2,21 +2,18 @@ class Day02 : AbstractDay(2) {
 
     override fun partOne(): Number {
 
-        val input = inputLines().map { it -> it.split(" ") }
+        val input = inputLines().map { it.split(" ") }
 
-        val horizontalPos = input.filter { (dir,_) -> dir.equals("forward") }.map{ (_,value) -> value.toInt()}.sum()
-        val down = input.filter { (dir,_) -> dir.equals("down") }.map{(_,value) -> value.toInt()}.sum()
-        val up = input.filter { (dir,_) -> dir.equals("up") }.map{(_,value) -> value.toInt()}.sum()
+        val horizontalPos = input.filter { (dir, _) -> dir.equals("forward") }.sumOf { (_, value) -> value.toInt() }
+        val down = input.filter { (dir, _) -> dir.equals("down") }.sumOf { (_, value) -> value.toInt() }
+        val up = input.filter { (dir, _) -> dir.equals("up") }.sumOf { (_, value) -> value.toInt() }
 
-        val result = horizontalPos * (down - up)
-
-        return result
-
+        return horizontalPos * (down - up)
     }
 
     override fun partTwo(): Number {
 
-        val input = inputLines().map { it -> it.split(" ") }
+        val input = inputLines().map { it.split(" ") }
 
         var aim = 0
         var horizontalPos = 0
@@ -55,11 +52,11 @@ class Day02 : AbstractDay(2) {
 
         val elem = inputData.first()
         val value = elem.last().toInt()
-        when (elem.first()) {
-            "forward" -> return secondPuzzle(inputData.drop(1), Triple(acc.first + value,acc.second + acc.third*value,acc.third))
-            "down" -> return secondPuzzle(inputData.drop(1), Triple(acc.first,acc.second,acc.third + value))
-            "up" -> return secondPuzzle(inputData.drop(1), Triple(acc.first,acc.second,acc.third - value))
-            else -> return -1 // should never happen
+        return when (elem.first()) {
+            "forward" -> secondPuzzle(inputData.drop(1), Triple(acc.first + value,acc.second + acc.third*value,acc.third))
+            "down" -> secondPuzzle(inputData.drop(1), Triple(acc.first,acc.second,acc.third + value))
+            "up" -> secondPuzzle(inputData.drop(1), Triple(acc.first,acc.second,acc.third - value))
+            else -> -1 // should never happen
         }
 
     }

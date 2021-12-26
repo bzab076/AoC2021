@@ -1,6 +1,6 @@
 class Day05 : AbstractDay(5) {
 
-    val ventCoordinates : MutableList<Pair<Pair<Int,Int>,Pair<Int,Int>>> = emptyList<Pair<Pair<Int,Int>,Pair<Int,Int>>>().toMutableList()
+    private val ventCoordinates : MutableList<Pair<Pair<Int,Int>,Pair<Int,Int>>> = emptyList<Pair<Pair<Int,Int>,Pair<Int,Int>>>().toMutableList()
 
     private val rows = 1000
     private val cols = 1000
@@ -11,7 +11,7 @@ class Day05 : AbstractDay(5) {
         parseInput()
         setVents(false)
 
-        return grid.toList().map { it -> it.toList().filter { x -> x>1 }.count() }.sum()
+        return grid.toList().sumOf { it.toList().count { x -> x > 1 } }
     }
 
     override fun partTwo(): Number {
@@ -19,7 +19,7 @@ class Day05 : AbstractDay(5) {
         initializeGrid()
         setVents(true)
 
-        return grid.toList().map { it -> it.toList().filter { x -> x>1 }.count() }.sum()
+        return grid.toList().sumOf { it.toList().count { x -> x > 1 } }
     }
 
     private fun parseInput() {
@@ -35,7 +35,7 @@ class Day05 : AbstractDay(5) {
 
     private fun initializeGrid() {
 
-        for(i in 0 until grid.size) {
+        for(i in grid.indices) {
             for(j in 0 until grid[i].size) {
                 grid[i][j] = 0
             }
@@ -53,25 +53,20 @@ class Day05 : AbstractDay(5) {
 
             if (isLineValid) {
 
-                val xIncrement : Int
-                val yIncrement : Int
-
-                if(it.first.first == it.second.first) {
-                    xIncrement = 0
-                }
-                else if(it.first.first < it.second.first) {
-                    xIncrement = 1
+                val xIncrement : Int = if(it.first.first == it.second.first) {
+                    0
+                } else if(it.first.first < it.second.first) {
+                    1
                 } else {
-                    xIncrement = -1
+                    -1
                 }
 
-                if(it.first.second == it.second.second) {
-                    yIncrement = 0
-                }
-                else if(it.first.second < it.second.second) {
-                    yIncrement = 1
+                val yIncrement : Int = if(it.first.second == it.second.second) {
+                    0
+                } else if(it.first.second < it.second.second) {
+                    1
                 } else {
-                    yIncrement = -1
+                    -1
                 }
 
                 var x = it.first.first - xIncrement

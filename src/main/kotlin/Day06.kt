@@ -5,13 +5,13 @@ class Day06 : AbstractDay(6) {
     override fun partOne(): Number {
 
         // get number of descendants for every fish in the list and sum them into the result
-        return inputString().split(",").map { it -> countFishOptimized(it.toInt(), 80) }.sum()
+        return inputString().split(",").sumOf { countFishOptimized(it.toInt(), 80) }
     }
 
     override fun partTwo(): Number {
 
         // get number of descendants for every fish in the list and sum them into the result
-        return inputString().split(",").map { it -> countFishOptimized(it.toInt(), 256) }.sum()
+        return inputString().split(",").sumOf { countFishOptimized(it.toInt(), 256) }
     }
 
 
@@ -43,12 +43,10 @@ class Day06 : AbstractDay(6) {
 
         val key = timer + endDay
 
-        if(!results.containsKey(key)) {
+        if (!results.containsKey(key)) {
             results.put(key, countFish(timer, 1, endDay))
         }
 
-        val res = results.get(key)
-        return if (res != null) res else 0
-
+        return results.get(key) ?: 0
     }
 }

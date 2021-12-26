@@ -2,8 +2,8 @@ class Day08 : AbstractDay(8) {
 
     override fun partOne(): Number {
 
-        val outputNums = inputLines().map { it -> it.substringAfter(" | ").split(" ") }
-        return outputNums.map { it -> it.count{ s -> listOf(2,3,4,7).contains(s.length) } }.sum()
+        val outputNums = inputLines().map { it.substringAfter(" | ").split(" ") }
+        return outputNums.sumOf { it.count { s -> listOf(2, 3, 4, 7).contains(s.length) } }
     }
 
     override fun partTwo(): Number {

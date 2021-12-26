@@ -14,7 +14,7 @@ class Day14 : AbstractDay(14) {
     private fun parseRules() : Map<String,String> {
 
         val ruleList = inputLines().drop(2).map{it.split(" -> ")}
-        val ruleMap : MutableMap<String,String> = mutableMapOf<String,String>()
+        val ruleMap : MutableMap<String,String> = mutableMapOf()
         ruleList.forEach {
             ruleMap.put(it.first(),it.last())
         }
